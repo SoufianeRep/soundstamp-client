@@ -1,14 +1,26 @@
 module.exports = {
-  env: { browser: true, es2020: true },
+  env: {
+    browser: true,
+    es2021: true,
+  },
   extends: [
-    'eslint:recommended',
+    'airbnb',
+    'airbnb/hooks',
+    'airbnb-typescript',
+    'plugin:react/recommended',
+    'standard-with-typescript',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
   ],
-  parser: '@typescript-eslint/parser',
-  parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
-  plugins: ['react-refresh'],
+  overrides: [],
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    project: ['tsconfig.json', 'vite.config.ts'],
+  },
+  plugins: ['react'],
   rules: {
-    'react-refresh/only-export-components': 'warn',
+    'react/react-in-tsx-scope': 'off',
+    'react/tsx-uses-react': 'off',
+    'comma-dangle': [],
   },
 }
