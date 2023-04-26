@@ -1,8 +1,8 @@
-import Box from '@mui/joy/Box';
 import React from 'react';
-import { closeNavigation, openNavigation } from '../utils/animationUtils';
+import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet/Sheet';
 import List from '@mui/joy/List/List';
+import { Link } from 'react-router-dom';
 import ListSubheader from '@mui/joy/ListSubheader/ListSubheader';
 import ListItem from '@mui/joy/ListItem/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton/ListItemButton';
@@ -10,6 +10,7 @@ import ListItemDecorator from '@mui/joy/ListItemDecorator/ListItemDecorator';
 import ListItemContent from '@mui/joy/ListItemContent/ListItemContent';
 import Typography from '@mui/joy/Typography/Typography';
 import IconButton from '@mui/joy/IconButton/IconButton';
+import { closeNavigation, openNavigation } from '../utils/animationUtils';
 
 export default function MainNavigation() {
   return (
@@ -65,46 +66,60 @@ export default function MainNavigation() {
           <ListSubheader role="presentation" sx={{ color: 'text.primary' }}>
             Dashboard
           </ListSubheader>
-          <ListItem>
-            <ListItemButton onClick={() => closeNavigation()}>
-              <ListItemDecorator>
-                <i data-feather="activity" />
-              </ListItemDecorator>
-              <ListItemContent>Overview</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => closeNavigation()}>
-              <ListItemDecorator>
-                <i data-feather="hard-drive" />
-              </ListItemDecorator>
-              <ListItemContent>Dropbox</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => closeNavigation()}>
-              <ListItemDecorator>
-                <i data-feather="clipboard" />
-              </ListItemDecorator>
-              <ListItemContent>Projects</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => closeNavigation()}>
-              <ListItemDecorator>
-                <i data-feather="calendar" />
-              </ListItemDecorator>
-              <ListItemContent>Calender</ListItemContent>
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton onClick={() => closeNavigation()}>
-              <ListItemDecorator>
-                <i data-feather="settings" />
-              </ListItemDecorator>
-              <ListItemContent>Administration Tools</ListItemContent>
-            </ListItemButton>
-          </ListItem>
+          <Link to="/dashboard" style={{ textDecoration: 'none' }}>
+            <ListItem>
+              <ListItemButton
+                onClick={() => closeNavigation()}
+                selected
+                variant="soft"
+              >
+                <ListItemDecorator>
+                  <i data-feather="activity" />
+                </ListItemDecorator>
+                <ListItemContent>Overview</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to="/dropbox" style={{ textDecoration: 'none' }}>
+            <ListItem>
+              <ListItemButton onClick={() => closeNavigation()}>
+                <ListItemDecorator>
+                  <i data-feather="hard-drive" />
+                </ListItemDecorator>
+                <ListItemContent>Dropbox</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to="/projects" style={{ textDecoration: 'none' }}>
+            <ListItem>
+              <ListItemButton onClick={() => closeNavigation()}>
+                <ListItemDecorator>
+                  <i data-feather="clipboard" />
+                </ListItemDecorator>
+                <ListItemContent>Projects</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to="/calendar" style={{ textDecoration: 'none' }}>
+            <ListItem>
+              <ListItemButton onClick={() => closeNavigation()}>
+                <ListItemDecorator>
+                  <i data-feather="calendar" />
+                </ListItemDecorator>
+                <ListItemContent>Calender</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
+          <Link to="/admin" style={{ textDecoration: 'none' }}>
+            <ListItem>
+              <ListItemButton onClick={() => closeNavigation()}>
+                <ListItemDecorator>
+                  <i data-feather="settings" />
+                </ListItemDecorator>
+                <ListItemContent>Administration Tools</ListItemContent>
+              </ListItemButton>
+            </ListItem>
+          </Link>
         </List>
         <Box sx={{ pl: 1, mt: 'auto', display: 'flex', alignItems: 'center' }}>
           <div>
