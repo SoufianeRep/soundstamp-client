@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/joy/Box';
 import Sheet from '@mui/joy/Sheet/Sheet';
 import List from '@mui/joy/List/List';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ListSubheader from '@mui/joy/ListSubheader/ListSubheader';
 import ListItem from '@mui/joy/ListItem/ListItem';
 import ListItemButton from '@mui/joy/ListItemButton/ListItemButton';
@@ -13,6 +13,12 @@ import IconButton from '@mui/joy/IconButton/IconButton';
 import { closeNavigation, openNavigation } from '../utils/animationUtils';
 
 export default function MainNavigation() {
+  const { pathname } = useLocation();
+
+  const isCurrent = (currentPath: string): boolean => {
+    return pathname === currentPath;
+  };
+
   return (
     <>
       <Box
@@ -70,8 +76,8 @@ export default function MainNavigation() {
             <ListItem>
               <ListItemButton
                 onClick={() => closeNavigation()}
-                selected
-                variant="soft"
+                selected={isCurrent('/dashboard')}
+                variant={isCurrent('/dashboard') ? 'soft' : 'plain'}
               >
                 <ListItemDecorator>
                   <i data-feather="activity" />
@@ -82,7 +88,11 @@ export default function MainNavigation() {
           </Link>
           <Link to="/dropbox" style={{ textDecoration: 'none' }}>
             <ListItem>
-              <ListItemButton onClick={() => closeNavigation()}>
+              <ListItemButton
+                onClick={() => closeNavigation()}
+                selected={isCurrent('/dropbox')}
+                variant={isCurrent('/dropbox') ? 'soft' : 'plain'}
+              >
                 <ListItemDecorator>
                   <i data-feather="hard-drive" />
                 </ListItemDecorator>
@@ -92,7 +102,11 @@ export default function MainNavigation() {
           </Link>
           <Link to="/projects" style={{ textDecoration: 'none' }}>
             <ListItem>
-              <ListItemButton onClick={() => closeNavigation()}>
+              <ListItemButton
+                onClick={() => closeNavigation()}
+                selected={isCurrent('/projects')}
+                variant={isCurrent('/projects') ? 'soft' : 'plain'}
+              >
                 <ListItemDecorator>
                   <i data-feather="clipboard" />
                 </ListItemDecorator>
@@ -102,7 +116,11 @@ export default function MainNavigation() {
           </Link>
           <Link to="/calendar" style={{ textDecoration: 'none' }}>
             <ListItem>
-              <ListItemButton onClick={() => closeNavigation()}>
+              <ListItemButton
+                onClick={() => closeNavigation()}
+                selected={isCurrent('/calendar')}
+                variant={isCurrent('/calendar') ? 'soft' : 'plain'}
+              >
                 <ListItemDecorator>
                   <i data-feather="calendar" />
                 </ListItemDecorator>
@@ -112,7 +130,11 @@ export default function MainNavigation() {
           </Link>
           <Link to="/admin" style={{ textDecoration: 'none' }}>
             <ListItem>
-              <ListItemButton onClick={() => closeNavigation()}>
+              <ListItemButton
+                onClick={() => closeNavigation()}
+                selected={isCurrent('/admin')}
+                variant={isCurrent('/admin') ? 'soft' : 'plain'}
+              >
                 <ListItemDecorator>
                   <i data-feather="settings" />
                 </ListItemDecorator>
