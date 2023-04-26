@@ -73,7 +73,10 @@ export default function RootLayout({ children }) {
             </Typography>
           </Breadcrumbs>
           <ColorSchemeToggle
-            sx={{ ml: 'auto', display: { xs: 'none', md: 'none' } }}
+            sx={{
+              ml: 'auto',
+              display: { xs: 'none', md: 'none', lg: 'inline-flex' },
+            }}
           />
         </Box>
         <Box>{children}</Box>
