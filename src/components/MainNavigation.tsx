@@ -13,12 +13,6 @@ import IconButton from '@mui/joy/IconButton/IconButton';
 import { closeNavigation, openNavigation } from '../utils/animationUtils';
 
 export default function MainNavigation() {
-  const { pathname } = useLocation();
-
-  const isCurrent = (currentPath: string): boolean => {
-    return pathname === currentPath;
-  };
-
   return (
     <>
       <Box
@@ -157,4 +151,9 @@ export default function MainNavigation() {
       </Sheet>
     </>
   );
+}
+
+function isCurrent(currentPath: string): boolean {
+  const { pathname } = useLocation();
+  return pathname === currentPath;
 }
