@@ -5,10 +5,12 @@ import MainNavigation from './MainNavigation';
 import Link from '@mui/joy/Link';
 import Typography from '@mui/joy/Typography/Typography';
 import ColorSchemeToggle from './utils/ColorSchemeToggle';
+import Header from './Header';
 
 export default function RootLayout({ children }) {
   return (
     <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
+      <Header />
       <MainNavigation />
       <Box
         component="main"
@@ -21,7 +23,7 @@ export default function RootLayout({ children }) {
           pt: {
             xs: `calc(${theme.spacing(2)} + var(--Header-height))`,
             sm: `calc(${theme.spacing(2)} + var(--Header-height))`,
-            md: 3,
+            md: `calc(${theme.spacing(2)} + var(--Header-height))`,
           },
           pb: {
             xs: 2,
@@ -71,7 +73,7 @@ export default function RootLayout({ children }) {
             </Typography>
           </Breadcrumbs>
           <ColorSchemeToggle
-            sx={{ ml: 'auto', display: { xs: 'none', md: 'inline-flex' } }}
+            sx={{ ml: 'auto', display: { xs: 'none', md: 'none' } }}
           />
         </Box>
         <Box>{children}</Box>
