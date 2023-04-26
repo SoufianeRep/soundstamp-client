@@ -1,12 +1,17 @@
 import React, { useEffect, useLayoutEffect } from 'react';
-import Dashboard from './pages/Dashboard';
-import RootLayout from './components/RootLayout';
+import { Routes, Route } from 'react-router-dom';
 import { CssVarsProvider } from '@mui/joy/styles/CssVarsProvider';
 import CssBaseline from '@mui/joy/CssBaseline';
 import customTheme from './theme';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import useScript from './utils/useScript';
+import Dashboard from './pages/Dashboard';
+import Calendar from './pages/Calendar';
+import RootLayout from './components/RootLayout';
 import Login from './pages/Login';
+import Dropbox from './pages/Dropbox';
+import AdminTools from './pages/AdminTools';
+import Projects from './pages/Projects';
 
 const useEnhancedEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -39,8 +44,15 @@ function App() {
       />
       <CssBaseline />
       <RootLayout>
-        {/* <Login /> */}
-        {/* <Dashboard /> */}
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/calendar" element={<Calendar />} />
+          <Route path="/dropbox" element={<Dropbox />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/admin" element={<AdminTools />} />
+          <Route element={<Dashboard />} />
+        </Routes>
       </RootLayout>
     </CssVarsProvider>
   );
