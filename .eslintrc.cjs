@@ -5,11 +5,12 @@ module.exports = {
   },
   extends: [
     'airbnb',
-    'airbnb/hooks',
     'airbnb-typescript',
+    'airbnb/hooks',
     'plugin:react/recommended',
     'standard-with-typescript',
     'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended',
   ],
   overrides: [],
   parserOptions: {
@@ -19,8 +20,7 @@ module.exports = {
   },
   plugins: ['react'],
   rules: {
-    'react/react-in-tsx-scope': 'off',
-    'react/tsx-uses-react': 'off',
+    'react/react-in-jsx-scope': 'off',
     'comma-dangle': [],
   },
 }
