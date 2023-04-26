@@ -1,21 +1,22 @@
+import * as React from 'react';
 import Box from '@mui/joy/Box';
-import React from 'react';
-import { closeNavigation, openNavigation } from '../utils/animationUtils';
-import Sheet from '@mui/joy/Sheet/Sheet';
-import List from '@mui/joy/List/List';
-import ListSubheader from '@mui/joy/ListSubheader/ListSubheader';
-import ListItem from '@mui/joy/ListItem/ListItem';
-import ListItemButton from '@mui/joy/ListItemButton/ListItemButton';
-import ListItemDecorator from '@mui/joy/ListItemDecorator/ListItemDecorator';
-import ListItemContent from '@mui/joy/ListItemContent/ListItemContent';
-import Typography from '@mui/joy/Typography/Typography';
-import IconButton from '@mui/joy/IconButton/IconButton';
+import Chip from '@mui/joy/Chip';
+import List from '@mui/joy/List';
+import ListSubheader from '@mui/joy/ListSubheader';
+import ListItem from '@mui/joy/ListItem';
+import ListItemContent from '@mui/joy/ListItemContent';
+import ListItemDecorator from '@mui/joy/ListItemDecorator';
+import ListItemButton from '@mui/joy/ListItemButton';
+import IconButton from '@mui/joy/IconButton';
+import Typography from '@mui/joy/Typography';
+import Sheet from '@mui/joy/Sheet';
+import { closeNavigation } from '../utils/animationUtils';
 
-export default function MainNavigation() {
+export default function SecondSidebar() {
   return (
-    <>
+    <React.Fragment>
       <Box
-        className="SideNavigation-overlay"
+        className="SecondSidebar-overlay"
         sx={{
           position: 'fixed',
           zIndex: 9998,
@@ -23,7 +24,7 @@ export default function MainNavigation() {
           left: 0,
           width: '100vw',
           height: '100vh',
-          bgColor: 'background.body',
+          bgcolor: 'background.body',
           opacity: 'calc(var(--SideNavigation-slideIn, 0) - 0.2)',
           transition: 'opacity 0.4s',
           transform: {
@@ -34,9 +35,12 @@ export default function MainNavigation() {
         onClick={() => closeNavigation()}
       />
       <Sheet
-        className="SideNavigation"
+        className="SecondSidebar"
         sx={{
-          position: { xs: 'fixed', lg: 'sticky' },
+          position: {
+            xs: 'fixed',
+            lg: 'sticky',
+          },
           transform: {
             xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--FirstSidebar-width, 0px)))',
             lg: 'none',
@@ -45,7 +49,7 @@ export default function MainNavigation() {
           borderColor: 'divider',
           transition: 'transform 0.4s',
           zIndex: 9999,
-          height: '100vh',
+          height: '100dvh',
           top: 0,
           p: 2,
           py: 3,
@@ -76,25 +80,44 @@ export default function MainNavigation() {
           <ListItem>
             <ListItemButton onClick={() => closeNavigation()}>
               <ListItemDecorator>
-                <i data-feather="hard-drive" />
+                <i data-feather="bell" />
               </ListItemDecorator>
-              <ListItemContent>Dropbox</ListItemContent>
+              <ListItemContent>Notification</ListItemContent>
+              <Chip variant="soft" size="sm">
+                10
+              </Chip>
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton onClick={() => closeNavigation()}>
               <ListItemDecorator>
-                <i data-feather="clipboard" />
+                <i data-feather="bar-chart" />
               </ListItemDecorator>
-              <ListItemContent>Projects</ListItemContent>
+              <ListItemContent>Analytics</ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem>
             <ListItemButton onClick={() => closeNavigation()}>
               <ListItemDecorator>
-                <i data-feather="calendar" />
+                <i data-feather="star" />
               </ListItemDecorator>
-              <ListItemContent>Calender</ListItemContent>
+              <ListItemContent>Saved reports</ListItemContent>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton selected variant="soft">
+              <ListItemDecorator>
+                <i data-feather="shopping-cart" />
+              </ListItemDecorator>
+              <ListItemContent>Orders</ListItemContent>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton onClick={() => closeNavigation()}>
+              <ListItemDecorator>
+                <i data-feather="user" />
+              </ListItemDecorator>
+              <ListItemContent>User reports</ListItemContent>
             </ListItemButton>
           </ListItem>
           <ListItem>
@@ -102,22 +125,22 @@ export default function MainNavigation() {
               <ListItemDecorator>
                 <i data-feather="settings" />
               </ListItemDecorator>
-              <ListItemContent>Administration Tools</ListItemContent>
+              <ListItemContent>Manage notifications</ListItemContent>
             </ListItemButton>
           </ListItem>
         </List>
         <Box sx={{ pl: 1, mt: 'auto', display: 'flex', alignItems: 'center' }}>
           <div>
             <Typography fontWeight="lg" level="body2">
-              Ezzine Youness
+              Olivia Ryhe
             </Typography>
-            <Typography level="body3">you.ezzine@gmail.com</Typography>
+            <Typography level="body2">you.ezzine@email.com</Typography>
           </div>
           <IconButton variant="plain" sx={{ ml: 'auto' }}>
             <i data-feather="log-out" />
           </IconButton>
         </Box>
       </Sheet>
-    </>
+    </React.Fragment>
   );
 }
