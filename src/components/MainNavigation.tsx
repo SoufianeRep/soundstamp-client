@@ -25,10 +25,10 @@ export default function MainNavigation() {
           width: '100vw',
           height: '100vh',
           bgColor: 'background.body',
-          opacity: 'calc(var(--SideNavigation-slideIn, 0) - 0.2)',
+          opacity: 'calc(var(--SideNavigation--slideIn, 0) - 0.2)',
           transition: 'opacity 0.4s',
           transform: {
-            xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--FirstSidebar-width, 0px)))',
+            xs: 'translateX(calc(100% * (var(--SideNavigation--slideIn, 0) - 1) + var(--SideNavigation--slideIn, 0) * var(--FirstSidebar-width, 0px)))',
             lg: 'translateX(-100%)',
           },
         }}
@@ -39,7 +39,7 @@ export default function MainNavigation() {
         sx={{
           position: { xs: 'fixed', lg: 'sticky' },
           transform: {
-            xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1) + var(--SideNavigation-slideIn, 0) * var(--FirstSidebar-width, 0px)))',
+            xs: 'translateX(calc(100% * (var(--SideNavigation--slideIn, 0) - 1) + var(--SideNavigation--slideIn, 0) * var(--FirstSidebar-width, 0px)))',
             lg: 'none',
           },
           borderRight: '1px solid',

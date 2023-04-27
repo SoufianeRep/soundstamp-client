@@ -6,7 +6,7 @@ export const openNavigation = () => {
 }
 
 export const closeNavigation = () => {
- if (typeof document !== 'undefined') {
+  if (typeof document !== 'undefined') {
   document.documentElement.style.removeProperty('--SideNavigation--slideIn');
   document.body.style.removeProperty('overflow');
  }
@@ -14,7 +14,7 @@ export const closeNavigation = () => {
 
 export const toggleSidebar = () => {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    const slideIn = window.getComputedStyle(document.documentElement).getPropertyValue('--SideNavigation-slideIn');
+    const slideIn = window.getComputedStyle(document.documentElement).getPropertyValue('--SideNavigation--slideIn');
     if (slideIn) {
       closeNavigation();
     } else {
