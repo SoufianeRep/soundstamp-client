@@ -7,11 +7,11 @@ import GlobalStyles from '@mui/joy/GlobalStyles';
 import useScript from './utils/useScript';
 import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
-import RootLayout from './components/RootLayout';
 import Login from './pages/Login';
 import DropboxPage from './pages/DropboxPage';
 import AdminTools from './pages/AdminTools';
 import Projects from './pages/Projects';
+import PrivateLayout from './utils/PrivateLayout';
 
 const useEnhancedEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -29,7 +29,6 @@ function App() {
   }, [status]);
 
   return (
-    // <Login />
     <CssVarsProvider disableTransitionOnChange theme={customTheme}>
       <GlobalStyles
         styles={{
@@ -43,17 +42,16 @@ function App() {
         }}
       />
       <CssBaseline />
-      <RootLayout>
-        <Routes>
-          <Route path="/login" element={<Login />} />
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route element={<PrivateLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/dropbox" element={<DropboxPage />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/admin" element={<AdminTools />} />
-          <Route element={<Dashboard />} />
-        </Routes>
-      </RootLayout>
+        </Route>
+      </Routes>
     </CssVarsProvider>
   );
 }
