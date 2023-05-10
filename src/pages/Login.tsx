@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { CssVarsProvider } from '@mui/joy/styles';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -11,22 +11,59 @@ import Link from '@mui/joy/Link';
 import Input from '@mui/joy/Input';
 import Typography from '@mui/joy/Typography';
 import ColorSchemeToggle from '../components/utils/ColorSchemeToggle';
+import FormHelperText from '@mui/joy/FormHelperText';
 import customTheme from '../theme';
 import GoogleIcon from '../components/icons/GoogleIcon';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { useNavigate } from 'react-router-dom';
 
-interface FormElements extends HTMLFormControlsCollection {
-  email: HTMLInputElement;
-  password: HTMLInputElement;
-  persistent: HTMLInputElement;
-}
-interface SignInFormElement extends HTMLFormElement {
-  readonly elements: FormElements;
+interface LoginFormData {
+  email: string;
+  password: string;
 }
 
 /**
  * This template uses [`Inter`](https://fonts.google.com/specimen/Inter?query=inter) font.
  */
 export default function Login() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInputError, setIsInputError] = useState(false);
+  const [user, setUser] = useLocalStorage('user', null);
+  const [token, setToken] = useLocalStorage('token', null);
+  const navigate = useNavigate();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ defaultValues: { email: '', password: '' } });
+  console.log('errors:', errors.email);
+  console.log('errors:', errors.password);
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      setIsLoading(true);
+      const response = await axios({
+        method: 'post',
+        url: 'http://localhost:5000/api/v1/auth/signin',
+        data,
+      });
+      const { success } = response.data;
+      if (success) {
+        const { user, token } = response.data.data;
+        setUser(user);
+        setToken(token);
+        navigate('/dashboard', { replace: true });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error.response.data);
+    }
+  };
+
   return (
     <CssVarsProvider
       defaultMode="dark"
@@ -134,29 +171,34 @@ export default function Login() {
                 Let&apos;s get started! Please enter your details.
               </Typography>
             </div>
-            <form
-              onSubmit={(event: React.FormEvent<SignInFormElement>) => {
-                event.preventDefault();
-                const formElements = event.currentTarget.elements;
-                const data = {
-                  email: formElements.email.value,
-                  password: formElements.password.value,
-                  persistent: formElements.persistent.checked,
-                };
-                alert(JSON.stringify(data, null, 2));
-              }}
-            >
-              <FormControl required>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <FormControl error={errors.email ? true : false}>
                 <FormLabel>Email</FormLabel>
                 <Input
                   placeholder="Enter your email"
                   type="email"
                   name="email"
+                  {...register('email', {
+                    required: 'The Email address is required',
+                  })}
                 />
+                {errors.email && (
+                  <FormHelperText>{errors?.email?.message}</FormHelperText>
+                )}
               </FormControl>
-              <FormControl required>
+              <FormControl error={errors.password ? true : false}>
                 <FormLabel>Password</FormLabel>
-                <Input placeholder="•••••••" type="password" name="password" />
+                <Input
+                  placeholder="•••••••"
+                  type="password"
+                  name="password"
+                  {...register('password', {
+                    required: 'The password is required',
+                  })}
+                />
+                {errors.password && (
+                  <FormHelperText>{errors?.password?.message}</FormHelperText>
+                )}
               </FormControl>
               <Box
                 sx={{
@@ -174,7 +216,7 @@ export default function Login() {
                   Forgot password
                 </Link>
               </Box>
-              <Button type="submit" fullWidth>
+              <Button type="submit" loading={isLoading} fullWidth>
                 Sign in
               </Button>
             </form>
@@ -182,6 +224,7 @@ export default function Login() {
               variant="outlined"
               color="neutral"
               fullWidth
+              disabled={isLoading}
               startDecorator={<GoogleIcon />}
             >
               Sign in with Google
