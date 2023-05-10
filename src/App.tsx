@@ -9,7 +9,7 @@ import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
 import RootLayout from './components/RootLayout';
 import Login from './pages/Login';
-import Dropbox from './pages/Dropbox';
+import DropboxPage from './pages/DropboxPage';
 import AdminTools from './pages/AdminTools';
 import Projects from './pages/Projects';
 
@@ -45,10 +45,10 @@ function App() {
       <CssBaseline />
       <RootLayout>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/calendar" element={<Calendar />} />
-          <Route path="/dropbox" element={<Dropbox />} />
+          <Route path="/dropbox" element={<DropboxPage />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/admin" element={<AdminTools />} />
           <Route element={<Dashboard />} />
