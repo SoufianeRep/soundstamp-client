@@ -79,7 +79,7 @@ export default function RootLayout({ children }) {
             }}
           />
         </Box>
-        <Box>{children}</Box>
+        {children}
       </Box>
     </Box>
   );
