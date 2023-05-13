@@ -9,9 +9,11 @@ import Dashboard from './pages/Dashboard';
 import Calendar from './pages/Calendar';
 import Login from './pages/Login';
 import DropboxPage from './pages/DropboxPage';
-import AdminTools from './pages/AdminTools';
+import AdminToolsLayout from './pages/admintools/AdminToolsLayout';
 import Projects from './pages/Projects';
 import PrivateLayout from './utils/PrivateLayout';
+import Accounts from './pages/admintools/Accounts';
+import Invitations from './pages/admintools/Invitations';
 
 const useEnhancedEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
@@ -49,7 +51,10 @@ function App() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/dropbox" element={<DropboxPage />} />
           <Route path="/projects" element={<Projects />} />
-          <Route path="/admin" element={<AdminTools />} />
+          <Route path="/admin/*" element={<AdminToolsLayout />}>
+            <Route path="accounts" element={<Accounts />} />
+            <Route path="invitations" element={<Invitations />} />
+          </Route>
         </Route>
       </Routes>
     </CssVarsProvider>
