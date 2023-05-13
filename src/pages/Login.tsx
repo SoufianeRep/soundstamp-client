@@ -29,7 +29,6 @@ interface LoginFormData {
  */
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false);
-  const [isInputError, setIsInputError] = useState(false);
   const [user, setUser] = useLocalStorage('user', null);
   const [token, setToken] = useLocalStorage('token', null);
   const navigate = useNavigate();
@@ -180,6 +179,11 @@ export default function Login() {
                   name="email"
                   {...register('email', {
                     required: 'The Email address is required',
+                    pattern: {
+                      value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                      message: 'Please provide a valid email',
+                    },
+                    setValueAs: (v) => v.toLowerCase(),
                   })}
                 />
                 {errors.email && (

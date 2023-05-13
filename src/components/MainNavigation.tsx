@@ -132,7 +132,7 @@ export default function MainNavigation() {
                 <ListItemDecorator>
                   <i data-feather="settings" />
                 </ListItemDecorator>
-                <ListItemContent>Administration Tools</ListItemContent>
+                <ListItemContent>Administration</ListItemContent>
               </ListItemButton>
             </ListItem>
           </Link>

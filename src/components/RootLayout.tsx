@@ -9,7 +9,7 @@ import Header from './Header';
 
 export default function RootLayout({ children }) {
   return (
-    <Box sx={{ display: 'flex', minHeight: '100dvh' }}>
+    <Box sx={{ display: 'flex', minHeight: '100dvh', overflow: 'auto' }}>
       <Header />
       <MainNavigation />
       <Box
