@@ -41,9 +41,7 @@ export default function UsersList() {
     }
   };
 
-  const usersMarkup = (users: User[]): JSX.Element[] => {
-    return users.map(() => {});
-  };
+  const usersMarkup = (users: User[]): JSX.Element[] => {};
 
   useEffect(() => {
     fetchUsers();
