@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
@@ -9,8 +9,21 @@ import RadioGroup from '@mui/joy/RadioGroup';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/joy/Button';
 import FormHelperText from '@mui/joy/FormHelperText';
+import { generatePassword } from '../utils/helpers';
 
 export default function CreateUserForm() {
+  const [password, setPassword] = useState('');
+  const passwordLength = 12;
+
+  const handleGenerate = () => {
+    setPassword(generatePassword(passwordLength));
+  };
+
+  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setPassword(e.currentTarget.value);
+    console.log(password);
+  };
+
   return (
     <Box sx={{ my: 2, px: 2 }}>
       <Box sx={{ display: 'flex' }}>
@@ -48,9 +61,18 @@ export default function CreateUserForm() {
             </FormControl>
             <FormControl>
               <FormLabel>Set a Password</FormLabel>
-              <Input placeholder="Set a password or generate ->" />
+              <Input
+                value={password}
+                placeholder="Set a password or generate ->"
+                onChange={handleChange}
+                endDecorator={
+                  <Button variant="plain" onClick={handleGenerate} sx={{}}>
+                    Generate
+                  </Button>
+                }
+              />
               <FormHelperText sx={{ visibility: 'hidden', color: 'red' }}>
-                Email Required
+                Set a password or generate one
               </FormHelperText>
             </FormControl>
             <FormControl>
