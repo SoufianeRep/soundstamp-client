@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import { useEffect, useLayoutEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { CssVarsProvider } from '@mui/joy/styles/CssVarsProvider';
 import CssBaseline from '@mui/joy/CssBaseline';
@@ -6,7 +6,7 @@ import customTheme from './theme';
 import GlobalStyles from '@mui/joy/GlobalStyles';
 import useScript from './utils/useScript';
 import Dashboard from './pages/Dashboard';
-import Calendar from './pages/Calendar';
+import Calendar from './pages/scheduler/Calendar';
 import Login from './pages/Login';
 import DropboxPage from './pages/DropboxPage';
 import AdminToolsLayout from './pages/admintools/AdminToolsLayout';
