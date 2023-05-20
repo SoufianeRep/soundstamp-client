@@ -72,8 +72,8 @@ export default function UsersList() {
     } catch (error) {
       const { response } = error;
       if (response.status === 401) {
-        localStorage.removeItem('token');
         navigate('/login');
+        localStorage.removeItem('token');
       }
     }
   };

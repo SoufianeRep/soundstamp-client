@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FormControl from '@mui/joy/FormControl';
 import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
@@ -23,6 +23,10 @@ export default function CreateUserForm() {
     setPassword(e.currentTarget.value);
     console.log(password);
   };
+
+  useEffect(() => {
+    console.log(password);
+  }, [password]);
 
   return (
     <Box sx={{ my: 2, px: 2 }}>
