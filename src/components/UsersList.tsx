@@ -70,7 +70,8 @@ export default function UsersList() {
       });
       setUsers(response.data);
     } catch (error) {
-      const { response } = error;
+      console.log(error);
+      const response = error.repsonse;
       if (response.status === 401) {
         navigate('/login');
         localStorage.removeItem('token');

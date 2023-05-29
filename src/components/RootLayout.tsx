@@ -1,4 +1,3 @@
-import React from 'react';
 import Box from '@mui/joy/Box';
 import Breadcrumbs from '@mui/joy/Breadcrumbs';
 import MainNavigation from './MainNavigation';
