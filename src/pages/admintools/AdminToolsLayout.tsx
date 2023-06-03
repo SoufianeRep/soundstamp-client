@@ -1,5 +1,3 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
 import Box from '@mui/joy/Box';
 import Tabs from '@mui/joy/Tabs';
 import TabList from '@mui/joy/TabList';
@@ -7,7 +5,6 @@ import TabPanel from '@mui/joy/TabPanel';
 import Tab from '@mui/joy/Tab';
 import Typography from '@mui/joy/Typography';
 import Sheet from '@mui/joy/Sheet';
-import { Link } from '@mui/material';
 
 import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
 import Accounts from './Accounts';
