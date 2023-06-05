@@ -22,12 +22,19 @@ import {
   ViewSwitcher,
   AppointmentTooltip,
   AppointmentForm,
+  AllDayPanel,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { useState, useEffect } from 'react';
 import Sessions, { SessionData } from '../../api/services/sessions';
+import Studios, { StudioData } from '../../api/services/studios';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 // =========================================
 // =============== TYPES ===================
@@ -39,12 +46,51 @@ type appointment = {
   description?: string;
   startDate: string;
   endDate: string;
+  studio_id?: number;
 };
 
 export default function Calendar() {
   const [appointments, setAppointments] = useState<appointment[]>([]);
   const [addedSession, setAddedSession] = useState({});
   const [sessionChanges, setSessionChanges] = useState({});
+  const [studios, setStudios] = useState<StudioData[]>([]);
+  const [studioId, setStudioId] = useState<number>(0);
+  const [open, setOpen] = useState(false);
+  const [error, setError] = useState('');
+
+  const fetchSessions = async (id: number) => {
+    try {
+      const response =
+        id > 0 ? await Sessions.getByStudio(id) : await Sessions.getAll();
+
+      const { sessions } = response.data.data;
+      const formattedSessions = sessions.map((session: SessionData) => ({
+        id: session.id,
+        title: session.title,
+        startDate: new Date(session.startDate),
+        endDate: new Date(session.endDate),
+      }));
+
+      setAppointments(formattedSessions);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchStudios = async () => {
+    try {
+      const response = await Studios.getAll();
+      setStudios(response.data.data.studios);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleStudioChange = async (event) => {
+    const id = event.target.value;
+    setStudioId(id);
+    fetchSessions(id);
+  };
 
   const changeAddedSession = (session: Object) => {
     setAddedSession(session);
@@ -64,42 +110,53 @@ export default function Calendar() {
       try {
         const { title, startDate, endDate, notes } = added;
         const sessionData: SessionData = {
-          title: title,
-          start_date: startDate.toJSON(),
-          end_date: endDate.toJSON(),
-          description: notes,
-          studio_id: 1,
+          title,
+          startDate: startDate.toJSON(),
+          endDate: endDate.toJSON(),
+          notes,
+          studio_id: studioId,
         };
 
         const response = await Sessions.createSession(sessionData);
         setAppointments((prevState) => {
-          const { id, title, start_date, end_date, description } =
+          const { id, title, startDate, endDate, notes } =
             response.data.data.session;
           return [
             ...prevState,
             {
               id,
               title,
-              startDate: start_date,
-              endDate: end_date,
-              description,
+              startDate,
+              endDate,
+              notes,
             },
           ];
         });
       } catch (error) {
-        console.error(error);
+        setError(error.response.data.data.error);
+        setOpen(true);
       }
     }
 
     if (changed) {
       try {
-        const id = +Object.keys(changed);
-        const response = await Sessions.updateSession(id, changed[id]);
-        const changedId = response.data.data.session.id;
+        const changedId = +Object.keys(changed);
+        const response = await Sessions.updateSession(changedId, {
+          ...changed[changedId],
+        });
+        const { id, title, startDate, endDate, notes } =
+          response.data.data.session;
+        const sessionData = {
+          id,
+          title,
+          startDate,
+          endDate,
+          notes,
+        };
         setAppointments((prevState) => {
           return [
             ...prevState.map((ap) =>
-              changedId === ap.id ? { ...ap, ...changed[id] } : ap
+              id === ap.id ? { ...ap, ...sessionData } : ap
             ),
           ];
         });
@@ -119,37 +176,46 @@ export default function Calendar() {
   };
 
   useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const response = await Sessions.listAll();
-
-        const { sessions } = response.data.data;
-        const formattedSessions = sessions.map((session: SessionData) => ({
-          id: session.id,
-          title: session.title,
-          startDate: new Date(session.start_date),
-          endDate: new Date(session.end_date),
-        }));
-
-        setAppointments(formattedSessions);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    if (appointments.length === 0) {
-      fetchAppointments();
-    }
+    fetchSessions(0);
+    fetchStudios();
   }, []); // This is dangerous keeps refetching every keystroke
 
   return (
     <MaterialCssVarsProvider>
       <Box sx={{ height: '82vh' }}>
-        <Box sx={{ my: 2, display: 'flex' }}>
+        <Box
+          sx={{
+            my: 2,
+            display: 'flex',
+            justifyContent: 'center',
+            alignContent: '',
+          }}
+        >
           <Typography variant="h1" sx={{ fontSize: 34, fontWeight: 700 }}>
             Scheduler
           </Typography>
           <Box flex={999}></Box>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="demo-simple-select-standard-label">
+              Studios
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={studioId || 0}
+              onChange={handleStudioChange}
+              label="Age"
+            >
+              <MenuItem key={0} value={0}>
+                All Studios
+              </MenuItem>
+              {studios.map((studio) => (
+                <MenuItem key={studio.id} value={studio.id}>
+                  {studio.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
         <Paper elevation={1} sx={{ mt: 2, height: '100%' }}>
           {/* <CssBaseline /> */}
@@ -167,15 +233,29 @@ export default function Calendar() {
             <IntegratedEditing />
             <MonthView />
             <WeekView />
-            <DayView startDayHour={8} endDayHour={20} />
+            <DayView />
+            <Appointments />
+            <AppointmentTooltip showOpenButton showDeleteButton />
             <Toolbar />
             <DateNavigator />
             <TodayButton />
             <ViewSwitcher />
-            <Appointments />
-            <AppointmentTooltip showOpenButton showDeleteButton />
-            <AppointmentForm />
+            <AllDayPanel />
+            <AppointmentForm readOnly={studioId === 0} />
           </Scheduler>
+          <Snackbar
+            open={open}
+            autoHideDuration={3000}
+            onClose={() => setOpen(false)}
+          >
+            <Alert
+              onClose={() => setOpen(false)}
+              severity="error"
+              sx={{ width: '100%' }}
+            >
+              {error}
+            </Alert>
+          </Snackbar>
         </Paper>
       </Box>
     </MaterialCssVarsProvider>

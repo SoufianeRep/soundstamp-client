@@ -2,27 +2,28 @@ import client from '../client';
 
 export type SessionData = {
   id?: number;
-  title?: string;
-  description?: string;
-  start_date: Date;
-  end_date: string;
+  title?: string | any;
+  notes?: string;
+  startDate: Date;
+  endDate: string;
   studio_id: number;
 }
 
 export default {
-  listAll: () => client.get("sessions"),
+  getAll: () => client.get("sessions"),
+  getByStudio: (id: number) => client.get(`sessions/studio/${id}`),
   createSession: (data: SessionData) => client.post("sessions", {
     title: data.title,
-    description: data.description,
-    start_date: data.start_date,
-    end_date: data.end_date,
+    notes: data.notes,
+    startDate: data.startDate,
+    endDate: data.endDate,
     studio_id: data.studio_id
   }),
   updateSession: (id: number, data: SessionData) => client.post(`sessions/${id}`, {
     title: data.title,
-    description: data.description,
-    start_date: data.start_date,
-    end_date: data.end_date,
+    notes: data.notes,
+    startDate: data.startDate,
+    endDate: data.endDate,
   }),
   deleteSession: (id: number | string) => client.delete(`sessions/${id}`)
 
